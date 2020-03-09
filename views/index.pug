@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title  Usuarios registrados
+  body
+    div
+      a( href= "/register" ) Registrarse
+      |
+      |
+      table
+        thead
+          tr
+            th Name
+            th Email
+        tbody
+          each val in registeredUsers
+            tr
+              td= val.name
+              td= val.email
