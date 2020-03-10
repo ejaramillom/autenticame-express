@@ -8,10 +8,10 @@ const schema = mongoose.Schema({
 });
 
 // hashes the password
-schema.pre( "save", function (next) {
-  bcrypt.hash( this.password, 10, (err, hash) => {
-    if (err) {
-      return next(err);
+schema.pre( "save", function ( next ) {
+  bcrypt.hash( this.password, 10, ( err, hash ) => {
+    if ( err ) {
+      return next( err );
     }
     this.password = hash;
     next();

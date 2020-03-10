@@ -7,13 +7,13 @@ html
       a( href= "/register" ) Registrarse
       |
       |
-      table
+      table( class= "table" )
         thead
           tr
             th Name
             th Email
         tbody
-          each val in registeredUsers
+          each val in users
             tr
               td= val.name
               td= val.email
