@@ -17,11 +17,7 @@ app.use( express.urlencoded({ extended: true }));
 app.use( cookieParser() );
 app.use( "/assets", express.static( path.join( __dirname, "assets" )));
 app.use( "/", routes);
-app.use( cookieSession({
-  secret: "session"/* una cadena de texto aleatoria */,
-  // Cookie Options
-  maxAge: 1 * 60 * 60 * 1000 // 1 hours
-}))
-
+app.use(cookieSession({ secret: "session" }));
+app.use("/public", express.static(process.cwd() + "/public"));
 
 app.listen(3000, () => console.log( "Listening on port 3000 ..." ));
