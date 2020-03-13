@@ -13,28 +13,23 @@ const requireUser = async (req, res, next) => {
   }
 }
 
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true }
-});
-
-UserSchema.statics.authenticate = async ( email, password ) => {
-  // buscamos el usuario utilizando el email
-  const user = await mongoose.model( "User" ).findOne({ email: email });
-
-  if ( user ) {
-    // si existe comparamos la contraseña
-    return new Promise(( resolve, reject ) => {
-      bcrypt.compare( password, user.password, ( err, result ) => {
-        if ( err ) reject( err );
-        resolve( result === true ? user : null );
-      });
-    });
-    return user;
-  }
-
-  return null;
-};
+// UserSchema.statics.authenticate = async ( email, password ) => {
+//   // buscamos el usuario utilizando el email
+//   const user = await mongoose.model( "User" ).findOne({ email: email });
+//
+//   if ( user ) {
+//     // si existe comparamos la contraseña
+//     return new Promise(( resolve, reject ) => {
+//       bcrypt.compare( password, user.password, ( err, result ) => {
+//         if ( err ) reject( err );
+//         resolve( result === true ? user : null );
+//       });
+//     });
+//     return user;
+//   }
+//
+//   return null;
+// };
 
 router.get( "/", requireUser, async ( req, res ) => {
   const users = await User.find();
