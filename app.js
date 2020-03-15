@@ -10,11 +10,10 @@ require( "./user" );
 
 app.set( "view engine", "pug" );
 app.set( "views", "views" );
+app.use( cookieSession({ secret: "session" }));
 app.use( express.urlencoded({ extended: true }));
 app.use( cookieParser() );
-app.use( "/assets", express.static( path.join( __dirname, "assets" )));
 app.use( "/", routes);
-app.use( cookieSession({ secret: "session" }));
 app.use( "/public", express.static(process.cwd() + "/public"));
 
 app.listen( 3000, () => console.log( "Listening on port 3000 ..." ));
