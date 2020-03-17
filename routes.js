@@ -13,24 +13,6 @@ const requireUser = async (req, res, next) => {
   }
 }
 
-// UserSchema.statics.authenticate = async ( email, password ) => {
-//   // buscamos el usuario utilizando el email
-//   const user = await mongoose.model( "User" ).findOne({ email: email });
-//
-//   if ( user ) {
-//     // si existe comparamos la contraseña
-//     return new Promise(( resolve, reject ) => {
-//       bcrypt.compare( password, user.password, ( err, result ) => {
-//         if ( err ) reject( err );
-//         resolve( result === true ? user : null );
-//       });
-//     });
-//     return user;
-//   }
-//
-//   return null;
-// };
-
 router.get( "/", requireUser, async ( req, res ) => {
   const users = await User.find();
   res.render( "index", { users: users });
@@ -73,7 +55,7 @@ router.post("/login", async function(req, res) {
       req.session.userId = user._id; // acá guardamos el id en la sesión
       return res.redirect("/");
     } else {
-      res.render("/login", { error: "Wrong email or password. Try again!" });
+      res.render("login", { error: "Wrong email or password. Try again!" });
     }
   } catch (e) {
     return next(e);
@@ -86,3 +68,22 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
+
+
+// UserSchema.statics.authenticate = async ( email, password ) => {
+//   // buscamos el usuario utilizando el email
+//   const user = await mongoose.model( "User" ).findOne({ email: email });
+//
+//   if ( user ) {
+//     // si existe comparamos la contraseña
+//     return new Promise(( resolve, reject ) => {
+//       bcrypt.compare( password, user.password, ( err, result ) => {
+//         if ( err ) reject( err );
+//         resolve( result === true ? user : null );
+//       });
+//     });
+//     return user;
+//   }
+//
+//   return null;
+// };
