@@ -8,6 +8,9 @@ const app = express();
 
 require( "./user" );
 
+mongoose.connect(process.env.DATABASE_URL || "mongodb://localhost/datathree", { autoIndex: false, useNewUrlParser: true });
+const db = mongoose.connection;
+
 app.set( "view engine", "pug" );
 app.set( "views", "views" );
 app.use( cookieSession({ secret: "session" }));

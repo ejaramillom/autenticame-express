@@ -1,7 +1,37 @@
 const mongoose = require("mongoose");
-const UserSchema = require("./userSchema");
+const bcrypt = require("bcrypt");
 
-mongoose.connect(process.env.DATABASE_URL || "mongodb://localhost/datathree", { autoIndex: false, useNewUrlParser: true });
-const db = mongoose.connection;
+const schema = mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true }
+});
 
-module.exports = mongoose.model("User", UserSchema);
+// hashes the password
+schema.pre("save", function (next) {
+  bcrypt.hash(this.password, 10, (err, hash) => {
+    if (err) {
+      return next(err);
+    }
+    this.password = hash;
+    next();
+  });
+});
+
+// used for authentication
+schema.statics.authenticate = async (email, password) => {
+  const user = await mongoose.model("User").findOne({ email: email });
+  if (user) {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) reject(err);
+        resolve(result === true ? user : null);
+      });
+    });
+    return user;
+  }
+
+  return null;
+};
+
+module.exports = mongoose.model("User", schema);
