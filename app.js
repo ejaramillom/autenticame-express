@@ -8,7 +8,7 @@ const routes = require('./routes');
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/users", { useNewUrlParser: true });
 
 const app = express();
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 app.set('views', 'views');
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieSession({ secret: "session" }));
