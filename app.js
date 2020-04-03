@@ -4,12 +4,12 @@ const path = require( "path" );
 const routes = require( "./routes" );
 const cookieParser = require( "cookie-parser" );
 const cookieSession = require( "cookie-session")
+const db = mongoose.connection;
 const app = express();
-
 require( "./user" );
 
-mongoose.connect(process.env.DATABASE_URL || "mongodb://localhost/datathree", { autoIndex: false, useNewUrlParser: true });
-const db = mongoose.connection;
+mongoose.connect( process.env.MONGODB_URL || "mongodb://localhost:27017/userOne", { useNewUrlParser: true });
+mongoose.connection.on( "error", function( e ) { console.error( e ); });
 
 app.set( "view engine", "pug" );
 app.set( "views", "views" );
